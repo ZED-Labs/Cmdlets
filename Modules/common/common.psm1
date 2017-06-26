@@ -1,3 +1,5 @@
+# Ehlo
+
 Function Common([string]$Name){
     Get-Command -Module Common | Where {$_.Name -like "*$Name*"}
 }
@@ -886,11 +888,15 @@ Function Join-Object{
     }
 }
 Function Get-InstalledSoftware([string]$Name){
-	if ($Name){
-		Get-ItemProperty "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" | Where {$_.DisplayName -And $_.DisplayName -like "$Name"} | Sort DisplayName | Select-Object DisplayName, InstallDate, DisplayVersion, Publisher | Sort InstallDate -Descending
-	}else{
-		Get-ItemProperty "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" | Where {$_.DisplayName} | Sort DisplayName | Select-Object DisplayName, InstallDate, DisplayVersion, Publisher | Sort InstallDate -Descending
-	}
+    if ($IsWindows){
+        if ($Name){
+            Get-ItemProperty "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" | Where {$_.DisplayName -And $_.DisplayName -like "$Name"} | Sort DisplayName | Select-Object DisplayName, InstallDate, DisplayVersion, Publisher | Sort InstallDate -Descending
+        }else{
+            Get-ItemProperty "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" | Where {$_.DisplayName} | Sort DisplayName | Select-Object DisplayName, InstallDate, DisplayVersion, Publisher | Sort InstallDate -Descending
+        }
+    }else{
+        rpm -qa
+    }
 }
 Function Get-NimsoftGraph([string]$Name,[string]$timeFrame){
     # Script to launch an Internet Explorer browser with a URL to pull up CA UIM (Nimsoft) performance data for a server
