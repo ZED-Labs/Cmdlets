@@ -3,7 +3,7 @@ function zCore([string]$Name){
 }
 function Mods([string]$Name){
 	zInit
-	foreach ($mod in (Get-Module | Where {$_.Name -like "*$Name*" -And $_.Path -like "*$Global:ProfilePath*"})){get-module $mod.Name}
+	foreach ($mod in (Get-Module | Where {$_.Name -like "*$Name*" -And $_.Path -like "*$Global:ModulePath*"})){get-module $mod.Name}
 }
 Function zUpdate([string]$Name){
 	zInit

@@ -1,1 +1,1 @@
-If (Test-Path ".\Modules\zCore\init.ps1"){write-host "Loading Cmdlets..."; . ".\Modules\zCore\init.ps1"}
+If (Test-Path "$Env:USERPROFILE\Documents\WindowsPowerShell\Modules\zCore\init.ps1"){write-host "Loading Cmdlets..."; . "$Env:USERPROFILE\Documents\WindowsPowerShell\Modules\zCore\init.ps1"}
