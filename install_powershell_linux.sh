@@ -19,17 +19,3 @@ if ! rpm -qa | grep powershell-6.0.0_beta.3-1.el7; then
     fi
     rpm -ivh ./Include/powershell-6.0.0_beta.3-1.el7.x86_64.rpm > /dev/null
 fi
-#echo    powercli...
-#mkdir -p /usr/local/share/powershell > /dev/null
-#mkdir -p /usr/local/share/powershell/Modules > /dev/null
-#mkdir $CD/.local > /dev/null
-#mkdir $HOME/.local/share > /dev/null
-#mkdir $HOME/.local/share/powershell > /dev/null
-#mkdir $HOME/.local/share/powershell/Modules > /dev/null
-
-# unzip -n ./Include/PowerCLI.ViCore.zip -d /usr/local/share/powershell/Modules > /dev/null
-#unzip ./Include/PowerCLI.ViCore.zip -d $HOME/.local/share/powershell/Modules > /dev/null
-#echo    powercli-Vds...
-# unzip -n ./Include/PowerCLI.Vds.zip -d /usr/local/share/powershell/Modules > /dev/null
-#unzip ./Include/PowerCLI.Vds.zip -d $HOME/.local/share/powershell/Modules > /dev/null
-#powershell -Command "Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:\$false"
