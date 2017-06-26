@@ -71,11 +71,11 @@ Function zUpdate([string]$Name){
 			foreach ($mod in ($Available | Select -Skip 1)){
 				$Mod = $Mod.Split('/')[0]
 				write-host "  $Mod`..." -ForegroundColor Yellow
-				if (! (test-path "$ModulePath/$Mod")){md "$ModulePath/$Mod" -p | Out-Null}
+				if (! (test-path "$Global:ModulePath/$Mod")){md "$Global:ModulePath/$Mod" -p | Out-Null}
 				$ModFiles = @(Invoke-WebRequest http://c.zed-labs.com/cmdlets/modules/$Mod).links.href
 				foreach ($modFile in ($ModFiles | Select -Skip 1)){
 					write-host "    $ModFile" -ForegroundColor DarkGreen
-					wget "http://c.zed-labs.com/cmdlets/modules/$Mod/$ModFile" -q -O "$ModulePath/$Mod/$modFile" | Out-Null
+					wget "http://c.zed-labs.com/cmdlets/modules/$Mod/$ModFile" -q -O "$Global:ModulePath/$Mod/$modFile" | Out-Null
 				}
 				import-module -Global -Force -DisableNameChecking $Mod 2>&1 | Out-Null
 			}
