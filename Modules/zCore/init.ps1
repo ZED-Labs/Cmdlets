@@ -1,3 +1,6 @@
+#Get-Module -ListAvailable PowerCLI* | Import-Module
+#if (Get-PowerCLIConfiguration | Where {$_.InvalidCertificateAction -And $_.InvalidCertificateAction -ne "Ignore"}){Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false | Out-Null}
+
 write-host "Initializing Cmdlets..." -ForegroundColor Yellow -NonewLine
 function zInit(){
 	if ($profile -like "*\*"){
@@ -12,7 +15,7 @@ function zInit(){
 
 zInit
 
-foreach ($Module in (Get-ChildItem -Recurse:$true $ModulePath\*.psm1)){
+foreach ($Module in (Get-ChildItem -Recurse:$true $Global:ModulePath\*.psm1)){
 	$ModuleName = ($Module.Name).Split('.')[0]
 	import-module -Global -Force -DisableNameChecking $Module.FullName 2>&1 | Out-Null
 	if ((get-module | Where {$_.Name -eq "$ModuleName"})){
