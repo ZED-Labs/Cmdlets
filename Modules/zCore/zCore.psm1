@@ -3,6 +3,7 @@ function zCore([string]$Name){
 }
 function Mods([string]$Name){
 	zInit
+	write-host "Modster Mash..." -ForegroundColor Yellow
 	foreach ($mod in (Get-Module | Where {$_.Name -like "*$Name*" -And $_.Path -like "*$Global:ModulePath*"})){get-module $mod.Name}
 }
 Function zUpdate([string]$Name){
