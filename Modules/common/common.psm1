@@ -272,7 +272,7 @@ Function Get-IP([string]$Name){
     }
 }
 Function Get-PublicIP {
-    (Invoke-WebRequest http://c.zed-labs.com/ip.php).Content
+    (Invoke-WebRequest http://c.zed-labs.com/pub/ip.php).Content
     #(Invoke-WebRequest ifconfig.me/ip).Content
 }
 Function Get-Geo{
