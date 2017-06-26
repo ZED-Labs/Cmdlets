@@ -8,9 +8,9 @@ if ($profile -like "*/*"){
 	$ModulePath = "$HOME/WindowsPowerShell/Modules"
 }
 
-foreach ($Module in (Get-ChildItem -Recurse:$true $ModulePath\*.psm1).Name){
-	$ModuleName = $Module.Split('.')[0]
-	import-module -Global -Force -DisableNameChecking $ModuleName 2>&1 | Out-Null
+foreach ($Module in (Get-ChildItem -Recurse:$true $ModulePath\*.psm1)){
+	$ModuleName = ($Module.Name).Split('.')[0]
+	import-module -Global -Force -DisableNameChecking $Module.FullName 2>&1 | Out-Null
 	if ((get-module | Where {$_.Name -eq "$short"})){
 		write-host " $ModuleName" -ForegroundColor DarkGreen -NoNewLine
 	}else{
