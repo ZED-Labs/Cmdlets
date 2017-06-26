@@ -249,10 +249,22 @@ Function IsConnectedToInternet{
 return [bool]([Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]'{DCB00C01-570F-4A9B-8D69-199FDBA5723B}')).IsConnectedToInternet)
 }
 Function IsAdmin{
-if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")){return $true}else{return $false}
+    if ($IsWindows){
+        if (([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]"Administrator")){return $true}else{return $false}
+    }else{
+        $UID = (id).Split('=')[1].Split('(')[0]
+        # $UNAME = (id).Split('(')[1].Split(')')[0]
+        if ($UID -eq 0){return $true}else{return $false}
+    }
 }
 Function Get-IP([string]$Name){
-return [System.Net.Dns]::GetHostAddresses("$Name").IPAddressToString
+    if ($IsWindows){
+        return [System.Net.Dns]::GetHostAddresses("$Name").IPAddressToString
+    }else{
+        $DefaultDev = (route -n | Where {$_ -like '0.0.0.0*'}).Split(' ')[-1]
+        $IPAddr = (ip addr show dev $DefaultDev | Where {$_ -like "*inet *"}).Split('/')[0].Split(' ')[5]
+        return $IPAddr
+    }
 }
 Function Get-PublicIP {
 (Invoke-WebRequest ifconfig.me/ip).Content
