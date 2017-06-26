@@ -1,7 +1,6 @@
 # Ehlo Ground
 
 Function Common([string]$Name){
-    write-host "HERE" -ForegroundColor Yellow
     Get-Command -Module Common | Where {$_.Name -like "*$Name*"}
 }
 Function CheckPreReq([string]$FriendlyName,[string]$ModuleName,[string]$StdModulePath,[string]$InstallCommand,$Confirm){
