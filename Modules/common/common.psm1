@@ -272,7 +272,8 @@ Function Get-IP([string]$Name){
     }
 }
 Function Get-PublicIP {
-    (Invoke-WebRequest ifconfig.me/ip).Content
+    (Invoke-WebRequest http://c.zed-labs.com/ip.php).Content
+    #(Invoke-WebRequest ifconfig.me/ip).Content
 }
 Function Get-Geo{
     $MyPublicIP = (Invoke-WebRequest 'http://myip.dnsomatic.com' -UseBasicParsing).Content
