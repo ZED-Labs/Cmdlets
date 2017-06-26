@@ -1,0 +1,1 @@
+write-host "Cmdlet initialization has started..."
