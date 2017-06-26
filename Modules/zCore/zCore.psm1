@@ -2,9 +2,8 @@ function zCore([string]$Name){
 	Get-Command -Module zCore | Where {$_.Name -like "*$Name*"}
 }
 function Mods([string]$Name){
-	if ($profile -like "*\*"){$ProfilePath = $profile.Replace($profile.split("\")[-1],"").trim('\')}
-	if ($profile -like "*/*"){$ProfilePath = '/'+$profile.Replace($profile.split("/")[-1],"").trim('/')}
-	foreach ($mod in (Get-Module | Where {$_.Name -like "*$Name*" -And $_.Path -like "*$ProfilePath*"})){get-module $mod.Name}
+	zInit
+	foreach ($mod in (Get-Module | Where {$_.Name -like "*$Name*" -And $_.Path -like "*$Global:ProfilePath*"})){get-module $mod.Name}
 }
 Function zUpdate([string]$Name){
 	zInit
