@@ -4,6 +4,7 @@
 write-host "Initializing Cmdlets..." -ForegroundColor Yellow -NonewLine
 function zInit(){
 	if ($profile -like "*\*"){
+		$Global:IsWindows = $true
 		$Global:ProfilePath = $profile.Replace($profile.split("\")[-1],"").trim('\')
 		$Global:ModulePath = "$ProfilePath\Modules"
 	}
@@ -11,6 +12,9 @@ function zInit(){
 		$Global:ProfilePath = '/'+$profile.Replace($profile.split("/")[-1],"").trim('/')
 		$Global:ModulePath = "$HOME/WindowsPowerShell/Modules"
 	}
+	#write-debug "`$Global:ProfilePath = $Global:ProfilePath"
+	#write-debug "`$Global:ModulePath  = $Global:ModulePath"
+	#""
 }
 
 zInit
@@ -24,3 +28,4 @@ foreach ($Module in (Get-ChildItem -Recurse:$true $Global:ModulePath\*.psm1)){
 		write-host " $ModuleName" -ForegroundColor Red -NoNewLine
 	}
 }
+""
