@@ -1,7 +1,7 @@
 # Ehlo Ground
 
 Function Common([string]$Name){
-    write-host " HERE AGA IN!! !!" -ForegroundColor Yellow
+    #write-host " HERE AGA IN!! !!" -ForegroundColor Yellow
     Get-Command -Module Common | Where {$_.Name -like "*$Name*"}
 }
 Function CheckPreReq([string]$FriendlyName,[string]$ModuleName,[string]$StdModulePath,[string]$InstallCommand,$Confirm){
