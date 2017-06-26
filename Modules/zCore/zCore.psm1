@@ -75,7 +75,7 @@ Function zUpdate([string]$Name){
 				$ModFiles = @(Invoke-WebRequest http://c.zed-labs.com/cmdlets/modules/$Mod).links.href
 				foreach ($modFile in ($ModFiles | Select -Skip 1)){
 					write-host "    $ModFile" -ForegroundColor DarkGreen
-					wget "http://c.zed-labs.com/cmdlets/modules/$Mod/$ModFile" -q -O "$Global:ModulePath/$Mod/$modFile" | Out-Null
+					wget "http://c.zed-labs.com/cmdlets/modules/$Mod/$ModFile" -q -O "$Global:ModulePath/$Mod/$modFile" 2>&1 | Out-Null
 					if ($modFile -like "*.psm1"){import-module -Global -Force -DisableNameChecking "$Global:ModulePath/$Mod/$modFile" 2>&1 | Out-Null}
 				}
 				
