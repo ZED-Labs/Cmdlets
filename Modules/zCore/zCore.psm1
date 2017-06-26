@@ -9,7 +9,7 @@ function Mods([string]$Name){
 Function zUpdate([string]$Name){
 	zInit
 
-	if ($ProfilePath -like "*\*"){
+	if ($Global:ProfilePath -like "*\*"){
 			write-host "`nChecking for module updates..." -Foregroundcolor Yellow
 			write-host "  core..." -Foregroundcolor Yellow -NoNewLine
 			$AvailableVer = (Get-Item '\\c.zed-labs.com\cmdlet$\modules\zCore\zCore.psm1').LastWriteTime
