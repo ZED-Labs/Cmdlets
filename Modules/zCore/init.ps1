@@ -1,4 +1,4 @@
-write-host "Initializing Cmdlets..." -ForegroundColor Yellow -NonewLine
+clear; write-host "`nInitializing Cmdlets..." -ForegroundColor Yellow -NonewLine
 function zInit(){
 	if ($profile -like "*\*"){
 		$Global:IsWindows = $true
