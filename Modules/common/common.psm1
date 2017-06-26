@@ -259,7 +259,7 @@ Function IsAdmin{
 }
 Function Get-IP([string]$Name){
     if ($IsWindows){
-        return [System.Net.Dns]::GetHostAddresses("$Name").IPAddressToString
+        return [System.Net.Dns]::GetHostAddresses("$Name").IPAddressToString | Where {$_ -NotLike "*:*"}
     }else{
         $DefaultDev = (route -n | Where {$_ -like '0.0.0.0*'}).Split(' ')[-1]
         $IPAddr = (ip addr show dev $DefaultDev | Where {$_ -like "*inet *"}).Split('/')[0].Split(' ')[5]
