@@ -61,6 +61,7 @@ Function CheckPreReq([string]$FriendlyName,[string]$ModuleName,[string]$StdModul
     If $Confirm is set to $false, install will proceed without user interaction.
     Default behavior: console will prompt for confirmation before any installations.
     #>
+    if ($IsLinux){write-host "`nWindows only. (for now)`n"; return}
     if (! $FriendlyName){
         write-host "`nPlease specify at least " -NoNewLine; write-host "-FriendlyName`n" -ForegroundColor Cyan
         write-host "    Cisco-Central" -ForegroundColor DarkGreen
@@ -284,7 +285,8 @@ Function Move-Window {
  [int]$PxlFromLeft,            
  [int]$PxlFromTop            
  )             
-    BEGIN {            
+    BEGIN {
+    if ($IsLinux){write-host "`nWindows only (for now)`n"; return}        
     $signature = @'
 
     [DllImport("user32.dll")]
@@ -317,7 +319,8 @@ Function Move-Window {
     Add-Type -MemberDefinition $signature -Name Wutils -Namespace WindowsUtils             
                 
     }            
-    PROCESS{            
+    PROCESS{
+    if ($IsLinux){write-host "`nWindows only (for now)`n"; return}        
     $phandle = [WindowsUtils.Wutils]::GetForegroundWindow()            
                 
     $o = New-Object -TypeName System.Object            
@@ -896,35 +899,6 @@ Function Get-InstalledSoftware([string]$Name){
         rpm -qa
     }
 }
-Function Get-NimsoftGraph([string]$Name,[string]$timeFrame){
-    # Script to launch an Internet Explorer browser with a URL to pull up CA UIM (Nimsoft) performance data for a server
-    # First parameter is the name of the server and is mandatory
-    # Second parameter is a time frame and is optional.  Default is 1day.  Time frames can be specified as in the following examples:
-    # 3day, 2hour, 6month, 1week, etc.
-    # Written by Brian DeFord, 2016-09-12
-
-    if ($Name -eq "") {
-        write-host "`nSyntax error:  Must specify -Name <Server>`n"
-        return
-    }
-
-    $URL1 = "http://cc-clnimsoft52:80/qoschart/jsp/standalone.jsp?user=readonlyuser&password=readonlyuser&def={'series':[{'sqt':'"
-    $URL2 = "*|QOS_CPU_USAGE|"
-    $URL3 = "*','style':'line','scale':'1'},{'sqt':'"
-    $URL4 = "*|QOS_MEMORY_PHYSICAL_PERC|"
-    $URL5 = "*','style':'line','scale':'1'},{'sqt':'"
-    $URL6 = "*|QOS_DISK_USAGE_PERC|*','style':'line','scale':'1'}],'title':'CPU_Memory_Disk_Usage','time':'-"
-    if ($timeFrame -eq "") {
-        $timeFrame = "1day"
-    }
-    $URL7= "'}"
-
-    $URL_Final = $URL1 + $Name + $URL2 + $Name + $URL3 + $Name + $URL4 + $Name + $URL5 + $Name + $URL6 + $timeFrame + $URL7
-
-    $IE = new-object -com internetexplorer.application
-    $IE.navigate2("$URL_Final")
-    $IE.visible = $true
-}
 Function Which([string]$Name){
 	foreach ($dir in ($env:path).split(';')){
 		if (test-path "$dir\$Name"){
@@ -1009,6 +983,7 @@ Function Putty-Shuffle {
     .DESCRIPTION
     Shuffles putty sessions.
     #>
+    if ($IsLinux){write-host "`nWindows only (for now)`n"; return}
     foreach ($ps in (tasklist /fi "imagename eq putty.exe" /fo csv /v)){[array]$MyPS += $ps.split("`",`"")[26]}
     foreach ($i in ($MyPS | sort)){nircmd win settopmost ititle $i 1; nircmd win settopmost ititle $i 0}
 }
@@ -1019,6 +994,7 @@ Function Putty-Stack {
     .DESCRIPTION
     Shuffles putty sessions.
     #>
+    if ($IsLinux){write-host "`nWindows only (for now)`n"; return}
     foreach ($ps in (tasklist /fi "imagename eq putty.exe" /nh /fo csv /v)){[array]$MyPS += $ps.split("`",`"")[26]}
 
     $x = (Get-WmiObject win32_videocontroller).CurrentHorizontalResolution
@@ -1063,6 +1039,7 @@ Function Get-Stockquote{
         $Symbols
         )
         $Results = @()
+    if ($IsLinux){write-host "`nWindows only (for now)`n"; return}
     foreach ($symbol in $symbols){
         $c = 0
         $row = New-Object psobject
