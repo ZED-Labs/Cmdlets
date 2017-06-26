@@ -11,7 +11,7 @@ if ($profile -like "*/*"){
 foreach ($Module in (Get-ChildItem -Recurse:$true $ModulePath\*.psm1)){
 	$ModuleName = ($Module.Name).Split('.')[0]
 	import-module -Global -Force -DisableNameChecking $Module.FullName 2>&1 | Out-Null
-	if ((get-module | Where {$_.Name -eq "$short"})){
+	if ((get-module | Where {$_.Name -eq "$ModuleName"})){
 		write-host " $ModuleName" -ForegroundColor DarkGreen -NoNewLine
 	}else{
 		write-host " $ModuleName" -ForegroundColor Red -NoNewLine
