@@ -62,7 +62,7 @@ Function zUpdate([string]$Name){
 					Copy-Item -recurse -force -confirm:$false (($module.fullname).Replace(".psm1",".psd1")) "$psd" -wa 0 2>&1 | Out-Null
 					Copy-Item -recurse -force -confirm:$false ($module.fullname) "$psm" -wa 0
 					if ((Test-Path "$psd")){import-module "$psd" -Scope Global -DisableNameChecking -Force 2>&1 | Out-Null}else{if ((Test-Path "$psm")){import-module $psm -Scope Global -DisableNameChecking -Force 2>&1 | Out-Null}}
-				}else{write-host " already current." -ForegroundColor DarkGreen}
+				}else{write-host " already current." -ForegroundColor DarkGreen; import-module $psd -Scope Global -DisableNameChecking -Force 2>&1 | Out-Null}
 			}
 	}else{
 			$Available = @(Invoke-WebRequest http://c.zed-labs.com/cmdlets/modules).links.href
